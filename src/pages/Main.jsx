@@ -26,22 +26,11 @@ const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(__getTodoThunk())
-      .then(() => {
-        setIsLoading(false);
-      });
+      
   }, [dispatch]);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+ 
 
-  // const [showTodo, setShowTodo] = useState(null);
-
-  // useEffect(() => {
-  //   if (todos && todos.length > 0) {
-  //     setShowTodo(todos[0]);
-  //   }
-  // }, [todos]);
 
   return(
     <>

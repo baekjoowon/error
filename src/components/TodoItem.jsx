@@ -109,8 +109,8 @@ function TodoItem(props) {
 
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editedTodoTitle, setEditedTodoTitle] = useState(props.todo.title);
-
+  const [editedTodoTitle, setEditedTodoTitle] = useState(props.todo.text);
+  
   const handleTextClick = (e) => {
     e.stopPropagation();
     setIsModalOpen(true);
@@ -124,7 +124,7 @@ function TodoItem(props) {
     dispatch(
       __updateTodoThunk({
         ...props.todo,
-        title: editedTodoTitle,
+        text: editedTodoTitle,
         
       })
       );
@@ -132,11 +132,12 @@ setIsModalOpen(false);
 };
 
 const handleModalCancelButtonClick = () => {
-setEditedTodoTitle(props.todo.title);
+setEditedTodoTitle(props.todo.text);
 setIsModalOpen(false);
 };
 
 const handleDeleteButtonClick = () => {
+ 
 dispatch(__deleteTodoThunk(props.todo.id));
 };
 
@@ -145,7 +146,7 @@ return (
      <CheckCircle onClick={(e)=>{
 
       e.stopPropagation();
-      dispatch(__updatedoneTodoThunk(props.todo.id))
+      dispatch(__updatedoneTodoThunk(props.todo))
       }}
        done = {props.todo.done}>
         {props.todo.done && <MdDone />
@@ -153,7 +154,7 @@ return (
       }
      </CheckCircle>
     <Text done={props.todo.done} onClick={(e) => handleTextClick(e)}>
-    {props.todo.todo}
+    {props.todo.text}
     </Text>
     <Remove onClick={() => handleDeleteButtonClick()}>
     <MdDelete />

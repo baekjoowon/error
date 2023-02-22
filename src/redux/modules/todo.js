@@ -1,6 +1,6 @@
 import { configureStore, create,createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios';
-
+import { useDispatch } from 'react-redux';
 
 export const __getTodoThunk = createAsyncThunk(
   "GET_TODO",
@@ -8,7 +8,7 @@ export const __getTodoThunk = createAsyncThunk(
     try {
       const response = await axios.get('http://localhost:3001/todolist');
       console.log(response.data);
-      return response.data;
+      return thunkAPI.fulfillWithValue(response.data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);
     }
@@ -31,8 +31,8 @@ export const __deleteTodoThunk = createAsyncThunk(
   "DELETE_TODO",
   async (arg, thunkAPI) => {
     try {
-      await axios.delete(`http://localhost:3001/todolist/1/checktodos/${arg}`);
-      return thunkAPI.fulfillWithValue(arg);
+      const response = await axios.delete(`http://localhost:3001/todolist/${arg}`);
+      return thunkAPI.fulfillWithValue(response.data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);
     }
@@ -43,8 +43,11 @@ export const __updatedoneTodoThunk = createAsyncThunk(
   "UPDATE_TODO",
   async (arg, thunkAPI) => {
     try {
-      const response = await axios.patch(`http://localhost:3001/todolist/${arg.id}`, {done:arg.done});
-      return thunkAPI.fulfillWithValue(response.data.done);
+      
+      const response = await axios.patch(`http://localhost:3001/todolist/${arg.id}`, {...arg,done:(!arg.done)});
+      
+      return thunkAPI.fulfillWithValue(response.data);
+      
     } catch (error) {
       return thunkAPI.rejectWithValue(error.code);
     }
@@ -55,7 +58,8 @@ export const __updateTodoThunk = createAsyncThunk(
   "UPDATE_TODO",
   async (arg, thunkAPI) => {
     try {
-      const response = await axios.patch(`http://localhost:3001/todolist/${arg.id}`, {...arg,done:(arg.done)});
+      console.log(arg);
+      const response = await axios.patch(`http://localhost:3001/todolist/${arg.id}`, {...arg,text:(arg.text)});
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.code);
@@ -80,9 +84,10 @@ export const todos = createSlice({
   },
   extraReducers: {
     [__getTodoThunk.fulfilled]: (state, action) => {
+      
       state.isLoading = false;
       state.todos = action.payload;
-      console.log(action.payload);
+      
     },
     [__getTodoThunk.rejected]: (state, action) => {
       state.isLoading = false;
@@ -94,10 +99,23 @@ export const todos = createSlice({
     [__updateTodoThunk.fulfilled]: (state, action) => {
       state.isLoading = false;
       const updatedTodo = action.payload;
-      const todoIndex = state.todo.findIndex((todo) => todo.id === updatedTodo.id);
+      const todoIndex = state.todos.findIndex((todo) => todo.id === updatedTodo.id);
       state.todos[todoIndex] = updatedTodo;
     },
     [__updateTodoThunk.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__updateTodoThunk.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [__updatedoneTodoThunk.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      const updatedTodo = action.payload;
+      const todoIndex = state.todos.findIndex((todo) => todo.id === updatedTodo.id);
+      state.todos[todoIndex] = updatedTodo;
+    },
+    [__updatedoneTodoThunk.pending]: (state) => {
       state.isLoading = true;
     },
     [__updateTodoThunk.rejected]: (state, action) => {
@@ -112,14 +130,17 @@ export const todos = createSlice({
       state.isSuccess = true;
       state.isLoading = false;
       state.todos.push(action.payload);
+      
     },
     [__addTodoThunk.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
     [__deleteTodoThunk.fulfilled]: (state, action) => {
-      const target = state.todos.todolist[0].checktodos.findIndex((todo) => todo.id === action.payload)
-      state.todos.todolist[0].checktodos.splice(target, 1);
+      // const target = state.todos.findIndex((todo) => todo.id === action.payload)
+      // state.todos.splice(target, 1);
+      const target = state.todos.filter((todo) => todo.id === action.payload)
+      state.todos = target;
     },
     [__deleteTodoThunk.rejected]: () => {},
     [__deleteTodoThunk.pending]: () => {},

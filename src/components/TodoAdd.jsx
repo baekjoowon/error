@@ -89,7 +89,7 @@ function TodoAdd(){
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    dispatch(__addTodoThunk({ title: todoInput, done: false }));
+    dispatch(__addTodoThunk({ text: todoInput, done: false }));
     setInput("");
   };
   

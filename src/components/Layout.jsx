@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import { AiOutlineDoubleRight,AiOutlineDoubleLeft } from "react-icons/ai";
+import { useParams, useNavigate } from 'react-router-dom';
 
 const TodoLayoutStyle = styled.div`
   width: 512px;
@@ -14,17 +15,55 @@ const TodoLayoutStyle = styled.div`
   margin-bottom: 32px;
   display: flex;
   flex-direction: column;
-  
+`;
+
+const LeftArrow = styled.button`
+  position: absolute;
+  top: 50%;
+  left: -40px;
+  transform: translateY(-50%);
+  background-color: white;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  &:hover {
+    color: gray;
+  }
+`;
+
+const RightArrow = styled.button`
+  position: absolute;
+  top: 50%;
+  right: -40px;
+  transform: translateY(-50%);
+  background-color: white;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  &:hover {
+    color: gray;
+  }
 `;
 
 function Layout({ children }){
+
+    const { id } = useParams();
+    const parsedId = parseInt(id);
+    const navigate = useNavigate();
+
+    // const handleRightArrowClick = () => {
+    //     const nextUrl = `/showtodo/${parsedId + 1}`;
+    //     console.log(nextUrl);
+    //     navigate(nextUrl);
+    // };
+
+
     return(
-        
         <TodoLayoutStyle >
+            <LeftArrow><AiOutlineDoubleLeft/></LeftArrow>
+            <RightArrow ><AiOutlineDoubleRight/></RightArrow>
             { children }
         </TodoLayoutStyle>
-        
-    
     )
 }
 

@@ -1,40 +1,42 @@
 {
   "todolist": [
     {
-      "day": "2023년2월22일",
-      "checktodos": [
-        {
-          "id": 1,
-          "todo": "1"
-        },
-        {
-          "id": 2,
-          "todo": "2"
-        },
-        {
-          "id": 3,
-          "todo": "3"
-        },
-        {
-          "id": 4,
-          "todo": "4"
-        },
-        {
-          "id": 5,
-          "todo": "5"
-        }
-      ],
+      "date": "2023년2월22일",
+      "text": "황재연뚱떙이",
+      "done": false,
       "id": 1
     },
     {
-      "title": "6",
+      "text": "백주원 졸귀탱",
       "done": false,
       "id": 2
     },
     {
-      "title": "6",
+      "date": "",
+      "text": "김현호 왕똥구",
       "done": false,
       "id": 3
+    },
+    {
+      "text": "이재훈 핵바보",
+      "done": true,
+      "id": 4
+    },
+    {
+      "text": "ddad",
+      "done": true,
+      "id": 5
+    },
+    {
+      "text": "dad",
+      "done": true,
+      "id": 6
+    },
+    {
+      "date": "2023년2월22일",
+      "text": "8888ㅣㅣ",
+      "done": true,
+      "id": 7
     }
   ]
 }

@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React  from "react";
 import TodoItem from './TodoItem';
 import styled from 'styled-components';
-import { useSelector,useDispatch } from 'react-redux';
-import { useNavigate, useParams } from "react-router-dom";
-import { MdCheck } from 'react-icons/md';
+import { useSelector } from 'react-redux';
+
 
 
 
@@ -18,15 +17,10 @@ const TodoListStyle = styled.div`
 
 function TodoList(){
 
-  const dispatch = useDispatch();
-  // const { id } = useParams();
-  const navigate = useNavigate();
 
-  const [isEditMode, setIsEditMode] = useState(false);
-  const [updatedTodo, setUpdatedTodo] = useState("");
   
-  const todos = useSelector((state) => state.todo.todos[0]);
-  // const error = useSelector((state) => state.todo.error);
+  const todos = useSelector((state) => state.todo.todos);
+ 
 
     return(
         
@@ -34,8 +28,8 @@ function TodoList(){
           
           {
             
-            todos.checktodos.map((chekitem)=>{
-            console.log(todos);
+            todos.map((chekitem)=>{
+            
             return(
               <TodoItem key={chekitem.id} todo={chekitem}/>
             )

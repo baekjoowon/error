@@ -170,10 +170,7 @@ function AddList() {
   const [date, setDate] = useState("");
   const [formatDate,setFormatDate] = useState('');
   const [input1,setInput1] = useState('');
-  const [input2,setInput2] = useState('');
-  const [input3,setInput3] = useState('');
-  const [input4,setInput4] = useState('');
-  const [input5,setInput5] = useState('');
+  
 
   const dispatch = useDispatch();
 
@@ -198,9 +195,10 @@ function AddList() {
 
 
   const handleAddClick = () => {
-    dispatch(__addTodoThunk({day:formatDate,checktodos:[{id:1,todo:input1},{id:2,todo:input2},{id:3,todo:input3},{id:4,todo:input4},{id:5,todo:input5}]}))
+    dispatch(__addTodoThunk({date:formatDate,text:input1,done:false}))
     
     alert('등록완료');
+    setInput1("");
   };
 
 
@@ -232,41 +230,7 @@ function AddList() {
             </AddListInput>
 
             </List>
-            <List>
-            <CheckCircle ><MdDone/></CheckCircle>
-            <AddListInput value={input2}
-            placeholder="할 일을 입력해주세요."
-            onChange={(e) => setInput2(e.target.value)}
-            >
-            </AddListInput>
-
-            </List>
-            <List>
-            <CheckCircle ><MdDone/></CheckCircle>
-            <AddListInput value={input3}
-            placeholder="할 일을 입력해주세요."
-            onChange={(e) => setInput3(e.target.value)}
-            >
-            </AddListInput>
-
-            </List>
-            <List>
-            <CheckCircle ><MdDone/></CheckCircle>
-            <AddListInput value={input4}
-            placeholder="할 일을 입력해주세요."
-            onChange={(e) => setInput4(e.target.value)}
-            >
-            </AddListInput>
-            </List>
-
-            <List>
-            <CheckCircle ><MdDone/></CheckCircle>
-            <AddListInput value={input5}
-            placeholder="할 일을 입력해주세요."
-            onChange={(e) => setInput5(e.target.value)}
-            >
-            </AddListInput>
-            </List>
+            
             <AddButtonWrapper>
                 <AddButtonTitle />
                 <AddButton onClick={handleAddClick}>

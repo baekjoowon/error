@@ -59,20 +59,45 @@ const AddButton = styled(Link)`
   }
 `;
 
+const ProgressBarWrapper = styled.div`
+  width: 100%;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #e9ecef;
+`;
 
-function TodoHead(){
-  const todo = useSelector((state) => state.todo.todos[0]);
-  
-  return(
+const ProgressBar = styled.div`
+  height: 100%;
+  border-radius: 5px;
+  background-color: #20c997;
+  width: ${(props) => props.progress}%;
+`;
+
+
+function TodoHead() {
+  const todos = useSelector((state) => state.todo.todos);
+  const undoneTasksCount = todos.filter((todo) => todo.done).length;
+  let doneTasksCount = todos.filter((todo) => todo.done).length;
+  const totalTasksCount = todos.length;
+  doneTasksCount = totalTasksCount-doneTasksCount
+  const progress = (undoneTasksCount / totalTasksCount) * 100;
+
+  return (
     <TodoHeadStyle>
       <DateAddDiv>
-        <h1>{todo.day}</h1>
-        <AddButton to="/"><MdPostAdd/></AddButton>
+        <h1>{todos[0].date}</h1>
+        <AddButton to="/">
+          <MdPostAdd />
+        </AddButton>
       </DateAddDiv>
-      <div className='day'>토요일</div>
-      <TasksLeft>할일 {todo.length}개 남음</TasksLeft>
+      <div className="day">수요일</div>
+      <TasksLeft>할일 {doneTasksCount}개 남음</TasksLeft>
+      <ProgressBarWrapper>
+        <ProgressBar progress={progress} />
+      </ProgressBarWrapper>
     </TodoHeadStyle>
-  )
+  );
 }
+
 
 export default TodoHead;
