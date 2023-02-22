@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import TodoHead from './TodoHead.jsx'
-import TodoList from './TodoList.jsx'
-import TodoAdd from './TodoAdd.jsx'
+
 
 const TodoLayoutStyle = styled.div`
   width: 512px;

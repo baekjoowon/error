@@ -61,13 +61,13 @@ const AddButton = styled(Link)`
 
 
 function TodoHead(){
-  const todo = useSelector((state) => state.todo.todo);
-  console.log(todo)
+  const todo = useSelector((state) => state.todo.todos[0]);
+  
   return(
     <TodoHeadStyle>
       <DateAddDiv>
-        {/* <h1>{todo[0].day}</h1> */}
-        <AddButton to="/addList"><MdPostAdd/></AddButton>
+        <h1>{todo.day}</h1>
+        <AddButton to="/"><MdPostAdd/></AddButton>
       </DateAddDiv>
       <div className='day'>토요일</div>
       <TasksLeft>할일 {todo.length}개 남음</TasksLeft>

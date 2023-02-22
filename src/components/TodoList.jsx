@@ -25,16 +25,17 @@ function TodoList(){
   const [isEditMode, setIsEditMode] = useState(false);
   const [updatedTodo, setUpdatedTodo] = useState("");
   
-  const todos = useSelector((state) => state.todo.todo[0]);
-  const error = useSelector((state) => state.todo.error);
+  const todos = useSelector((state) => state.todo.todos[0]);
+  // const error = useSelector((state) => state.todo.error);
 
     return(
         
         <TodoListStyle>
           
           {
-           todos.length>0 && todos.map((chekitem)=>{
             
+            todos.checktodos.map((chekitem)=>{
+            console.log(todos);
             return(
               <TodoItem key={chekitem.id} todo={chekitem}/>
             )

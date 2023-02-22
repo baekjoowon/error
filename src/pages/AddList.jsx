@@ -210,7 +210,7 @@ function AddList() {
       <Layout>
         <TodoListStyle>
           <AddButtonWrapper>
-            <AddButton to="/"><MdOutlineNavigateBefore/></AddButton>
+            <AddButton to="showtodo"><MdOutlineNavigateBefore/></AddButton>
             <AddButtonTitle>리스트 추가</AddButtonTitle>
           </AddButtonWrapper>
           <AddFormStyle onSubmit={handleSubmit}>

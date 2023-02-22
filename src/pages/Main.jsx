@@ -16,32 +16,40 @@ const GlobalStyle = createGlobalStyle`
     overflow: hidden;
   }
 `;
-
 function Main(){
-  
-  const dispatch = useDispatch();
+const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isLoading = useSelector(state => state.todo.isLoading);
-  const todos = useSelector((state) => state.todo.todo[0]);
-
+  const [isLoading, setIsLoading] = useState(true);
+  const todos = useSelector((state) => state.todo.todos[0]);
+  console.log(todos);
+  // const { id } = useParams();
 
   useEffect(() => {
-    if (todos.length === 0) {
-      navigate("/addList");
+    dispatch(__getTodoThunk())
+      .then(() => {
+        setIsLoading(false);
+      });
+  }, [dispatch]);
 
-    }
-    else{
-      dispatch(__getTodoThunk());
-    }
-  }, [navigate, todos]);
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  // const [showTodo, setShowTodo] = useState(null);
+
+  // useEffect(() => {
+  //   if (todos && todos.length > 0) {
+  //     setShowTodo(todos[0]);
+  //   }
+  // }, [todos]);
 
   return(
     <>
       <GlobalStyle/>
       <Layout>
-        <TodoHead/>
-        <TodoList />
-        <TodoAdd/>
+            <TodoHead />
+             <TodoList/>
+            <TodoAdd />
       </Layout>
     </>
   );
