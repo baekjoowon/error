@@ -85,12 +85,12 @@ function TodoHead() {
   return (
     <TodoHeadStyle>
       <DateAddDiv>
-        <h1>{todos[0].date}</h1>
+        <h1>2023년02월23일</h1>
         <AddButton to="/">
           <MdPostAdd />
         </AddButton>
       </DateAddDiv>
-      <div className="day">수요일</div>
+      <div className="day">목요일</div>
       <TasksLeft>할일 {doneTasksCount}개 남음</TasksLeft>
       <ProgressBarWrapper>
         <ProgressBar progress={progress} />

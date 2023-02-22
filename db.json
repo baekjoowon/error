@@ -1,12 +1,6 @@
 {
   "todolist": [
     {
-      "date": "2023년2월22일",
-      "text": "황재연뚱떙이",
-      "done": false,
-      "id": 1
-    },
-    {
       "text": "백주원 졸귀탱",
       "done": false,
       "id": 2
@@ -23,20 +17,9 @@
       "id": 4
     },
     {
-      "text": "ddad",
+      "text": "황재연 왕뱃살쟁이",
       "done": true,
       "id": 5
-    },
-    {
-      "text": "dad",
-      "done": true,
-      "id": 6
-    },
-    {
-      "date": "2023년2월22일",
-      "text": "8888ㅣㅣ",
-      "done": true,
-      "id": 7
     }
   ]
 }

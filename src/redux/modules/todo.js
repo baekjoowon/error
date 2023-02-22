@@ -137,10 +137,10 @@ export const todos = createSlice({
       state.error = action.payload;
     },
     [__deleteTodoThunk.fulfilled]: (state, action) => {
-      // const target = state.todos.findIndex((todo) => todo.id === action.payload)
-      // state.todos.splice(target, 1);
-      const target = state.todos.filter((todo) => todo.id === action.payload)
-      state.todos = target;
+      const target = state.todos.findIndex((todo) => todo.id === action.payload)
+      state.todos.splice(target, 1);
+      // const target = state.todos.filter((todo) => todo.id === action.payload)
+      // state.todos = target;
     },
     [__deleteTodoThunk.rejected]: () => {},
     [__deleteTodoThunk.pending]: () => {},

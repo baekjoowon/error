@@ -136,8 +136,8 @@ setEditedTodoTitle(props.todo.text);
 setIsModalOpen(false);
 };
 
-const handleDeleteButtonClick = () => {
- 
+const handleDeleteButtonClick = (e) => {
+  
 dispatch(__deleteTodoThunk(props.todo.id));
 };
 
@@ -156,7 +156,7 @@ return (
     <Text done={props.todo.done} onClick={(e) => handleTextClick(e)}>
     {props.todo.text}
     </Text>
-    <Remove onClick={() => handleDeleteButtonClick()}>
+    <Remove onClick={(e) => handleDeleteButtonClick(e)}>
     <MdDelete />
     </Remove>
       <Modal isOpen={isModalOpen}>
