@@ -1,24 +1,23 @@
-import logo from './logo.svg';
 import './App.css';
+import Main from './pages/Main.jsx'
+import AddList from './pages/AddList';
+import { Routes, Route, Link } from 'react-router-dom'
+
+
 
 function App() {
   return (
+    
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      
+    <Routes>
+      <Route path="/" element={ <Main/> } />
+      <Route path="/addList" element={ <AddList/>} />
+      <Route path='*' element={<div>없는페이지입니다 홈으로 돌아가주세요<Link to={'/'}>home</Link></div> }></Route>
+    </Routes>
+      
     </div>
+    
   );
 }
 
