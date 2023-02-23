@@ -8,17 +8,17 @@
     {
       "date": "",
       "text": "김현호 왕똥구",
-      "done": false,
+      "done": true,
       "id": 3
     },
     {
       "text": "이재훈 핵바보",
-      "done": true,
+      "done": false,
       "id": 4
     },
     {
       "text": "황재연 왕뱃살쟁이",
-      "done": true,
+      "done": false,
       "id": 5
     }
   ]

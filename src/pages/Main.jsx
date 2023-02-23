@@ -13,7 +13,6 @@ import { __getTodoThunk } from "./../redux/modules/todo.js";
 const GlobalStyle = createGlobalStyle`
   body {
     background: #e9ecef;
-    overflow: hidden;
   }
 `;
 function Main(){
@@ -36,9 +35,9 @@ const dispatch = useDispatch();
     <>
       <GlobalStyle/>
       <Layout>
-            <TodoHead />
+            <TodoHead/>
              <TodoList/>
-            <TodoAdd />
+            <TodoAdd/>
       </Layout>
     </>
   );
