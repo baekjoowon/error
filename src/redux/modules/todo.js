@@ -6,7 +6,7 @@ export const __getTodoThunk = createAsyncThunk(
   "GET_TODO",
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get('http://localhost:3001/todolist');
+      const response = await axios.get(`${process.env.REACT_APP_TODOS}/todolist`);
       console.log(response.data);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (e) {
@@ -19,7 +19,7 @@ export const __addTodoThunk = createAsyncThunk(
   "ADD_TODO",
   async (arg, thunkAPI) => {
     try {
-      const { data } = await axios.post('http://localhost:3001/todolist', arg);
+      const { data } = await axios.post(`${process.env.REACT_APP_TODOS}/todolist`, arg);
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
@@ -31,7 +31,7 @@ export const __deleteTodoThunk = createAsyncThunk(
   "DELETE_TODO",
   async (arg, thunkAPI) => {
     try {
-      const response = await axios.delete(`http://localhost:3001/todolist/${arg}`);
+      const response = await axios.delete(`${process.env.REACT_APP_TODOS}/todolist/${arg}`);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);
@@ -44,7 +44,7 @@ export const __updatedoneTodoThunk = createAsyncThunk(
   async (arg, thunkAPI) => {
     try {
       
-      const response = await axios.patch(`http://localhost:3001/todolist/${arg.id}`, {...arg,done:(!arg.done)});
+      const response = await axios.patch(`${process.env.REACT_APP_TODOS}/todolist/${arg.id}`, {...arg,done:(!arg.done)});
       
       return thunkAPI.fulfillWithValue(response.data);
       
@@ -59,7 +59,7 @@ export const __updateTodoThunk = createAsyncThunk(
   async (arg, thunkAPI) => {
     try {
       console.log(arg);
-      const response = await axios.patch(`http://localhost:3001/todolist/${arg.id}`, {...arg,text:(arg.text)});
+      const response = await axios.patch(`${process.env.REACT_APP_TODOS}/todolist/${arg.id}`, {...arg,text:(arg.text)});
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.code);

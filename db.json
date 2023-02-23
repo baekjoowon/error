@@ -2,13 +2,13 @@
   "todolist": [
     {
       "text": "백주원 졸귀탱",
-      "done": false,
+      "done": true,
       "id": 2
     },
     {
       "date": "",
       "text": "김현호 왕똥구",
-      "done": true,
+      "done": false,
       "id": 3
     },
     {

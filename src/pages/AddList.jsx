@@ -5,6 +5,96 @@ import Layout from '../components/Layout';
 import { Link } from "react-router-dom";
 import { __getTodoThunk,__addTodoThunk } from '../redux/modules/todo';
 import { useDispatch } from 'react-redux';
+import useInput from '../hook/useInput';
+
+
+function AddList() {
+
+  const [date, setDate] = useState("");
+  const [formatDate,setFormatDate] = useState('');
+  const [input,setInput,handleInputChange] = useInput();
+  const [buttonIsAble,isButtonIsAble] = useState();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(__getTodoThunk());
+    ;
+  }, [dispatch]);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // TODO: submit form data
+  };
+  const dateHandleInputChange = (e) => {
+    e.preventDefault();
+    setDate(e.target.value);
+    const selectedDate = new Date(e.target.value);
+    const year = selectedDate.getFullYear();
+    const month = selectedDate.getMonth() + 1;
+    const day = selectedDate.getDate();
+    const formattedDate = `${year}년${month}월${day}일`;
+    setFormatDate(formattedDate);
+  };
+
+
+  const handleAddClick = () => {
+    if(!input){
+      isButtonIsAble(false);
+      alert('---삐삐 항목추가하셈---');
+    }
+    else{
+      isButtonIsAble(true);
+      dispatch(__addTodoThunk({date:formatDate,text:input,done:false}))
+      alert('등록완료');
+      setInput("");
+    }
+    
+  };
+
+
+  return (
+    <>
+      <GlobalStyle />
+      <Layout>
+        <TodoListStyle>
+          <AddButtonWrapper>
+            <AddButton to="showtodo"><MdOutlineNavigateBefore/></AddButton>
+            <AddButtonTitle>리스트 추가</AddButtonTitle>
+          </AddButtonWrapper>
+          <AddFormStyle onSubmit={handleSubmit}>
+            <InputWrapper>
+              <InputLabel htmlFor="date">날짜</InputLabel>
+              <Input
+                type="date"
+                id="date"
+                value={date}
+                onChange={dateHandleInputChange}
+              />
+            </InputWrapper>
+            <List>
+            <CheckCircle ><MdDone/></CheckCircle>
+            <AddListInput value={input}
+            placeholder="할 일을 입력해주세요."
+            onChange={handleInputChange}
+            >
+            </AddListInput>
+
+            </List>
+            
+            <AddButtonWrapper>
+                <AddButtonTitle />
+                <AddButton onClick={handleAddClick} disabled={buttonIsAble}>
+                  <MdDoneOutline />
+                </AddButton>
+              </AddButtonWrapper>
+          </AddFormStyle>
+        </TodoListStyle>
+      </Layout>
+    </>
+);
+}
+
+export default AddList;
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -12,39 +102,6 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const Remove = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #dee2e6;
-  font-size: 24px;
-  cursor: pointer;
-  &:hover {
-    color: #ff6b6b;
-  }
-  display: none;
-`;
-
-const TodoItemStyle = styled.div`
-  display: flex;
-  align-items: center;
-  padding-top: 12px;
-  padding-bottom: 12px;
-  &:hover {
-    ${Remove} {
-      display: initial;
-    }
-  }
-`;
-
-
-
-const Text = styled.div`
-  flex: 1;
-  font-size: 21px;
-  color: #495057;
-  
-`;
 
 const TodoListStyle = styled.div`
   text-align:center;
@@ -91,12 +148,6 @@ const CheckCircle = styled.div`
   
 `;
 
-const AddFormPosition = styled.div`
-  width: 100%;
-  bottom: 0;
-  left: 0;
-  position: absolute;
-`;
 
 const AddFormStyle = styled.form`
   background: #f8f9fa;
@@ -138,6 +189,7 @@ padding-top: 30px;
 
 
 const AddButton = styled(Link)`
+
 text-Decoration: none;
 display: flex;
 align-items: center;
@@ -161,87 +213,5 @@ const AddButtonTitle = styled.h1`
   text-align: center;
   margin: 0;
   flex: 1;
-`;
-
-
-
-function AddList() {
-
-  const [date, setDate] = useState("");
-  const [formatDate,setFormatDate] = useState('');
-  const [input1,setInput1] = useState('');
   
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(__getTodoThunk());
-    ;
-  }, [dispatch]);
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // TODO: submit form data
-  };
-  const handleInputChange = (e) => {
-    e.preventDefault();
-    setDate(e.target.value);
-    const selectedDate = new Date(e.target.value);
-    const year = selectedDate.getFullYear();
-    const month = selectedDate.getMonth() + 1;
-    const day = selectedDate.getDate();
-    const formattedDate = `${year}년${month}월${day}일`;
-    setFormatDate(formattedDate);
-  };
-
-
-  const handleAddClick = () => {
-    dispatch(__addTodoThunk({date:formatDate,text:input1,done:false}))
-    
-    alert('등록완료');
-    setInput1("");
-  };
-
-
-  return (
-    <>
-      <GlobalStyle />
-      <Layout>
-        <TodoListStyle>
-          <AddButtonWrapper>
-            <AddButton to="showtodo"><MdOutlineNavigateBefore/></AddButton>
-            <AddButtonTitle>리스트 추가</AddButtonTitle>
-          </AddButtonWrapper>
-          <AddFormStyle onSubmit={handleSubmit}>
-            <InputWrapper>
-              <InputLabel htmlFor="date">날짜</InputLabel>
-              <Input
-                type="date"
-                id="date"
-                value={date}
-                onChange={handleInputChange}
-              />
-            </InputWrapper>
-            <List>
-            <CheckCircle ><MdDone/></CheckCircle>
-            <AddListInput value={input1}
-            placeholder="할 일을 입력해주세요."
-            onChange={(e) => setInput1(e.target.value)}
-            >
-            </AddListInput>
-
-            </List>
-            
-            <AddButtonWrapper>
-                <AddButtonTitle />
-                <AddButton onClick={handleAddClick}>
-                  <MdDoneOutline />
-                </AddButton>
-              </AddButtonWrapper>
-          </AddFormStyle>
-        </TodoListStyle>
-      </Layout>
-    </>
-);
-}
-
-export default AddList;
+`;

@@ -4,6 +4,37 @@ import { MdPostAdd } from "react-icons/md";
 import { useSelector,useDispatch } from 'react-redux';
 
 
+
+
+
+function TodoHead() {
+  const todos = useSelector((state) => state.todo.todos);
+  const undoneTasksCount = todos.filter((todo) => todo.done).length;
+  let doneTasksCount = todos.filter((todo) => todo.done).length;
+  const totalTasksCount = todos.length;
+  doneTasksCount = totalTasksCount-doneTasksCount
+  const progress = (undoneTasksCount / totalTasksCount) * 100;
+
+  return (
+    <TodoHeadStyle>
+      <DateAddDiv>
+        <h1>2023년02월23일</h1>
+        <AddButton to="/">
+          <MdPostAdd />
+        </AddButton>
+      </DateAddDiv>
+      <div className="day">목요일</div>
+      <TasksLeft>할일 {doneTasksCount}개 남음</TasksLeft>
+      <ProgressBarWrapper>
+        <ProgressBar progress={progress} />
+      </ProgressBarWrapper>
+    </TodoHeadStyle>
+  );
+}
+
+
+export default TodoHead;
+
 const TodoHeadStyle = styled.div`
   
   padding-top: 48px;
@@ -72,32 +103,3 @@ const ProgressBar = styled.div`
   background-color: #20c997;
   width: ${(props) => props.progress}%;
 `;
-
-
-function TodoHead() {
-  const todos = useSelector((state) => state.todo.todos);
-  const undoneTasksCount = todos.filter((todo) => todo.done).length;
-  let doneTasksCount = todos.filter((todo) => todo.done).length;
-  const totalTasksCount = todos.length;
-  doneTasksCount = totalTasksCount-doneTasksCount
-  const progress = (undoneTasksCount / totalTasksCount) * 100;
-
-  return (
-    <TodoHeadStyle>
-      <DateAddDiv>
-        <h1>2023년02월23일</h1>
-        <AddButton to="/">
-          <MdPostAdd />
-        </AddButton>
-      </DateAddDiv>
-      <div className="day">목요일</div>
-      <TasksLeft>할일 {doneTasksCount}개 남음</TasksLeft>
-      <ProgressBarWrapper>
-        <ProgressBar progress={progress} />
-      </ProgressBarWrapper>
-    </TodoHeadStyle>
-  );
-}
-
-
-export default TodoHead;

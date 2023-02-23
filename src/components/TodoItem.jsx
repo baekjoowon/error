@@ -6,6 +6,80 @@ import { MdDone, MdDelete,MdOutlineDoneOutline,MdOutlineCancel } from "react-ico
 import { __deleteTodoThunk, __updateTodoThunk,__updatedoneTodoThunk } from "./../redux/modules/todo.js";
 
 
+
+
+function TodoItem(props) {
+
+  const dispatch = useDispatch();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editedTodoTitle, setEditedTodoTitle] = useState(props.todo.text);
+  
+  const handleTextClick = (e) => {
+    e.stopPropagation();
+    setIsModalOpen(true);
+  };
+
+  const handleModalInputChange = (e) => {
+    setEditedTodoTitle(e.target.value);
+  };
+
+  const handleModalCompleteButtonClick = () => {
+    dispatch(
+      __updateTodoThunk({
+        ...props.todo,
+        text: editedTodoTitle,
+        
+      })
+      );
+setIsModalOpen(false);
+};
+
+const handleModalCancelButtonClick = () => {
+setEditedTodoTitle(props.todo.text);
+setIsModalOpen(false);
+};
+
+const handleDeleteButtonClick = (e) => {
+  
+dispatch(__deleteTodoThunk(props.todo.id));
+};
+
+return (
+  <TodoItemStyle>
+     <CheckCircle onClick={(e)=>{
+
+      e.stopPropagation();
+      dispatch(__updatedoneTodoThunk(props.todo))
+      }}
+       done = {props.todo.done}>
+        {props.todo.done && <MdDone />
+
+      }
+     </CheckCircle>
+    <Text done={props.todo.done} onClick={(e) => handleTextClick(e)}>
+    {props.todo.text}
+    </Text>
+    <Remove onClick={(e) => handleDeleteButtonClick(e)}>
+    <MdDelete />
+    </Remove>
+      <Modal isOpen={isModalOpen}>
+      <ModalInput value={editedTodoTitle} onChange={(e) => handleModalInputChange(e)} />
+      <ButtonDiv>
+      <ModalButton onClick={() => handleModalCompleteButtonClick()}>
+        <MdOutlineDoneOutline/>
+      </ModalButton>
+      <ModalButton onClick={() => handleModalCancelButtonClick()}>
+        <MdOutlineCancel/>
+      </ModalButton>
+      </ButtonDiv>
+      </Modal>
+  </TodoItemStyle>
+);
+}
+
+export default TodoItem;
+
+
 const Remove = styled.div`
   display: flex;
   align-items: center;
@@ -104,74 +178,3 @@ const ButtonDiv = styled.div`
   justify-content: center;
   
 `
-
-function TodoItem(props) {
-
-  const dispatch = useDispatch();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editedTodoTitle, setEditedTodoTitle] = useState(props.todo.text);
-  
-  const handleTextClick = (e) => {
-    e.stopPropagation();
-    setIsModalOpen(true);
-  };
-
-  const handleModalInputChange = (e) => {
-    setEditedTodoTitle(e.target.value);
-  };
-
-  const handleModalCompleteButtonClick = () => {
-    dispatch(
-      __updateTodoThunk({
-        ...props.todo,
-        text: editedTodoTitle,
-        
-      })
-      );
-setIsModalOpen(false);
-};
-
-const handleModalCancelButtonClick = () => {
-setEditedTodoTitle(props.todo.text);
-setIsModalOpen(false);
-};
-
-const handleDeleteButtonClick = (e) => {
-  
-dispatch(__deleteTodoThunk(props.todo.id));
-};
-
-return (
-  <TodoItemStyle>
-     <CheckCircle onClick={(e)=>{
-
-      e.stopPropagation();
-      dispatch(__updatedoneTodoThunk(props.todo))
-      }}
-       done = {props.todo.done}>
-        {props.todo.done && <MdDone />
-
-      }
-     </CheckCircle>
-    <Text done={props.todo.done} onClick={(e) => handleTextClick(e)}>
-    {props.todo.text}
-    </Text>
-    <Remove onClick={(e) => handleDeleteButtonClick(e)}>
-    <MdDelete />
-    </Remove>
-      <Modal isOpen={isModalOpen}>
-      <ModalInput value={editedTodoTitle} onChange={(e) => handleModalInputChange(e)} />
-      <ButtonDiv>
-      <ModalButton onClick={() => handleModalCompleteButtonClick()}>
-        <MdOutlineDoneOutline/>
-      </ModalButton>
-      <ModalButton onClick={() => handleModalCancelButtonClick()}>
-        <MdOutlineCancel/>
-      </ModalButton>
-      </ButtonDiv>
-      </Modal>
-  </TodoItemStyle>
-);
-}
-
-export default TodoItem;

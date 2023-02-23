@@ -1,8 +1,52 @@
 import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { MdAdd } from 'react-icons/md';
-import { clearTodo, __addTodoThunk } from "./../redux/modules/todo";
+import todo, { clearTodo, __addTodoThunk } from "./../redux/modules/todo";
 import { useDispatch, useSelector } from "react-redux";
+import useInput from '../hook/useInput.js';
+
+
+function TodoAdd(){
+
+  const todos = useSelector((state) => state.todo.todos);
+  const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+  const onToggle = () => setOpen(!open);
+  const [input,setInput,handleInputChange] = useInput();
+  
+  const handleFormSubmit = (e) => {
+
+    if(todos.length < 8){
+      e.preventDefault();
+      dispatch(__addTodoThunk({ text: input, done: false }));
+      setInput("");
+    }
+    else{
+      alert('더이상 추가 안됌 삐삐');
+    }
+    
+  };
+  
+  
+
+    return(
+      <>
+      {open && (
+        <AddFormPosition>
+            <AddFormStyle onSubmit={handleFormSubmit}>
+                <Input value={input} onChange={handleInputChange}>
+                </Input>
+            </AddFormStyle>
+        </AddFormPosition>
+        )}
+        <CircleButton onClick={onToggle} open={open}>
+        <MdAdd />
+      </CircleButton>
+    </>
+    );
+}
+
+export default TodoAdd;
 
 const CircleButton = styled.button`
   background: #38d9a9;
@@ -78,38 +122,3 @@ const Input = styled.input`
   font-size: 18px;
   box-sizing: border-box;
 `;
-
-
-function TodoAdd(){
-
-  const [open, setOpen] = useState(false);
-  const [todoInput,setInput] = useState();
-  const dispatch = useDispatch();
-  const onToggle = () => setOpen(!open);
-
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    dispatch(__addTodoThunk({ text: todoInput, done: false }));
-    setInput("");
-  };
-  
-
-
-    return(
-      <>
-      {open && (
-        <AddFormPosition>
-            <AddFormStyle onSubmit={handleFormSubmit}>
-                <Input value={todoInput} onChange={(e)=>setInput(e.target.value)}>
-                </Input>
-            </AddFormStyle>
-        </AddFormPosition>
-        )}
-        <CircleButton onClick={onToggle} open={open}>
-        <MdAdd />
-      </CircleButton>
-    </>
-    );
-}
-
-export default TodoAdd;
